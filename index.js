@@ -21,28 +21,25 @@ fetch("http://localhost:3000/dogs", configurationObject)
      });
 */
 
-const formData = {
-    name: "Steve",
-    email: "steve@steve.com",
-};
 
-const configurationObject = {
-    method: "POST",
-    headers: {
+function submitData (name, email) {
+    let fetchedData = fetch('http://localhost:3000/users', {
+        method: "POST",
+        headers: {
         "Content-Type": "application/json",
         Accept: "application/json",
         },
-    body: JSON.stringify(formData),  
-};
-
-function submitData (formData) {
-    let fetchedData = fetch('http://localhost:3000/users',configurationObject)
+        body: JSON.stringify({name, email}),
+        })
     .then(function (response) {
         return response.json();
     })
     .then(function (object) {
-        console.log(object);
-    });
-    console.log(fetchedData)
+        document.body.textContent = object.id
+    })
+    .catch(function (error) {
+        document.body.textContent = error.message
+    }) 
+    return fetchedData
 } 
-submitData(formData)    
+submitData('Eric', 'eric@gmail.com')    
